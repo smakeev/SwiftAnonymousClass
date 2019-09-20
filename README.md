@@ -2,7 +2,7 @@
 
 Analog of anonymous class in Swift.
 
-Add function ```_new``` in your project.
+SwiftAnonymousClass adds function ```_new``` in your project.
 ```swift
 func _new<Type>(_ objectCreator:()->Type) -> Type {
     return objectCreator()
