@@ -28,3 +28,20 @@ let object: Greeting = _new {
 
 object.sayHello()
 ```
+More real example:
+
+```swift
+        let configuration = URLSessionConfiguration.default
+        var downloadsSession = URLSession(configuration: configuration,
+                                          delegate: _new {
+                                            class NoName: NSObject, URLSessionDownloadDelegate {
+                                                func urlSession(_ session: URLSession,
+                                                                downloadTask: URLSessionDownloadTask,
+                                                                didFinishDownloadingTo location: URL) {
+                                                    print("Finished downloading to \(location).")
+                                                }
+                                            }
+                                            return NoName()
+                                          },
+                                          delegateQueue: nil)
+```                                          
