@@ -45,3 +45,5 @@ More real example:
                                           },
                                           delegateQueue: nil)
 ```                                          
+Note, usually delegates are stored weekly. So you will get nil if just use ```some.delegate = _new {...}```.
+Firstly you need to store in strongly.
