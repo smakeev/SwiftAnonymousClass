@@ -45,5 +45,5 @@ More real example:
                                           },
                                           delegateQueue: nil)
 ```                                          
-Note, usually delegates are stored weekly. So you will get nil if just use ```some.delegate = _new {...}```.
-Firstly you need to store in strongly.
+Note URLSession stores it's delegate strongly but, usually delegates are stored weekly. So you will get nil if just use ```some.delegate = _new {...}```.
+Firstly you need to store it strongly.
