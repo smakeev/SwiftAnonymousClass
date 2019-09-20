@@ -23,4 +23,6 @@ let object: Greeting = new {
   }
   return NoName()
 }
+
+object.sayHello()
 ```
