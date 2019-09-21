@@ -102,4 +102,16 @@ some.delegate = _new(owner:some) { nil }
 some.delegate = someDelegateInstance
 ```
 
+## How to use:
+You may copy SwiftAnonymousClass.swift directly to your project,
+or use cocoa pods:
+```
+pod "SwiftAnonymousClass"
+```
+you will need to add 
+```swift
+import SwiftAnonymousClass
+```
+
+
 
