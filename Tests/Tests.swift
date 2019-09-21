@@ -10,22 +10,43 @@
 import XCTest
 import SwiftAnonymousClass
 
+protocol ADelegate: class {
+	func `do`()
+}
+
+class A {
+	weak var delegate: ADelegate?
+	
+	deinit {
+		delegate?.do()
+	}
+}
+
+//////////////////////////////
+
 protocol Greeting {
 	func sayHello() -> String
 }
 
+/////////////////////////////
+
 class Tests: XCTestCase {
 	
+	var testExpectations: [String]!
+	var testResult: [String]!
+	
 	override func setUp() {
-		// Put setup code here. This method is called before the invocation of each test method in the class.
+		testExpectations = [String]()
+		testResult = [String]()
+		
 	}
 	
 	override func tearDown() {
-		// Put teardown code here. This method is called after the invocation of each test method in the class.
+		XCTAssert(testExpectations == testResult)
 	}
 	
 	func testExample() {
-		let object: Greeting = _new {
+		let object: Greeting? = _new {
 			class NoName: Greeting {
 				func sayHello() -> String {
 					return "hello from no name class"
@@ -33,12 +54,12 @@ class Tests: XCTestCase {
 			}
 			return NoName()
 		}
-		XCTAssert("hello from no name class" == object.sayHello())
+		XCTAssert("hello from no name class" == object?.sayHello())
 	}
 	
 	func testURLSessionDelegate() {
 		let configuration = URLSessionConfiguration.default
-		var downloadsSession = URLSession(configuration: configuration,
+		let downloadsSession = URLSession(configuration: configuration,
 										  delegate: _new {
 											class NoName: NSObject, URLSessionDownloadDelegate {
 												func urlSession(_ session: URLSession,
@@ -52,4 +73,49 @@ class Tests: XCTestCase {
 										  delegateQueue: nil)
 		XCTAssert(downloadsSession.delegate != nil)
 	}
+	
+	func testLifeTime() {
+	
+		testExpectations = ["first delegate deinit", "DO from second", "second delegate deinit"]
+	
+		let a = A()
+		a.delegate = _new(owner: a) {
+			
+			class ADelegateInstance: ADelegate {
+				let superSelf: Tests!
+				init(_ tests: Tests) {
+					superSelf = tests
+				}
+			
+				func `do`() {
+					superSelf.testResult.append("DO from first")
+				}
+				
+				deinit {
+					superSelf.testResult.append("first delegate deinit")
+				}
+			}
+			
+			return ADelegateInstance(self)
+		}
+	
+		a.delegate = _new(owner:a) {
+			class ADelegateInstance: ADelegate {
+				let superSelf: Tests!
+				init(_ tests: Tests) {
+					superSelf = tests
+				}
+				func `do`() {
+					superSelf.testResult.append("DO from second")
+				}
+				
+				deinit {
+					superSelf.testResult.append("second delegate deinit")
+				}
+			}
+			
+			return ADelegateInstance(self)
+		}
+	}
+	
 }
