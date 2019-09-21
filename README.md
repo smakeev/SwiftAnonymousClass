@@ -47,7 +47,7 @@ Note URLSession stores it's delegate strongly but, usually delegates are stored 
 Firstly you need to store it strongly.
 To do this you may use ```owner``` parameter of ```_new``` function.
 This parameter will bind lifetime of ```_new``` object and ```owner```
-new anonimous object will be removed on deinit owner call.
+new anonimous object will be removed on deinit of owner.
 
 example:
 ```swift
@@ -81,11 +81,11 @@ If you set new anonymous delegate the first will be deallocated.
 If you set new delegate (not from _new) your anonymous delegate will stay untill owner deallocated.
 To make it be removed forced you may first set _new with nil. Example:
 
-Let's say you have Some class with week delegate SomeDelegate. 
-You have some class SOmeDelegateInstance and it's instance stored strongly somewhere.
-Firstly you set Some instance delegate as an anonymous object.
-But after you change it to not anonymous class your anonymous class will be unawailable but alive.
-To make it be destoyed before some instance be released you may do the follow
+Let's say you have Some class with week delegate ```SomeDelegate```. 
+You have some class ```SOmeDelegateInstance``` and it's instance stored strongly somewhere.
+Firstly you set ```Some``` instance delegate as an anonymous object.
+But after you change it to not anonymous class your anonymous class will be unavailable but alive.
+To make it be destoyed before some instance be released you may do the follow:
 
 ```swift
 
