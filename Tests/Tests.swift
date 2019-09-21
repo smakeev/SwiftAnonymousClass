@@ -22,6 +22,14 @@ class A {
 	}
 }
 
+class ADelegateInstance: ADelegate {
+
+	func `do`() {
+		
+	}
+
+}
+
 //////////////////////////////
 
 protocol Greeting {
@@ -46,7 +54,7 @@ class Tests: XCTestCase {
 	}
 	
 	func testExample() {
-		let object: Greeting? = _new {
+		let object: Greeting = _new {
 			class NoName: Greeting {
 				func sayHello() -> String {
 					return "hello from no name class"
@@ -54,7 +62,7 @@ class Tests: XCTestCase {
 			}
 			return NoName()
 		}
-		XCTAssert("hello from no name class" == object?.sayHello())
+		XCTAssert("hello from no name class" == object.sayHello())
 	}
 	
 	func testURLSessionDelegate() {
@@ -116,6 +124,34 @@ class Tests: XCTestCase {
 			
 			return ADelegateInstance(self)
 		}
+	}
+	
+	func testForceNil() {
+	
+		testExpectations = ["noname delegate deinit"]
+	
+		let a = A()
+		
+		let delegate = ADelegateInstance()
+		a.delegate = _new(owner:a) {
+			class ADelegateInstance: ADelegate {
+				let superSelf: Tests!
+				init(_ tests: Tests) {
+					superSelf = tests
+				}
+				func `do`() {
+					superSelf.testResult.append("DO from noname")
+				}
+				
+				deinit {
+					superSelf.testResult.append("noname delegate deinit")
+				}
+			}
+			return ADelegateInstance(self)
+		}
+		
+		a.delegate = _new(owner:a){ return nil }
+		a.delegate = delegate
 	}
 	
 }

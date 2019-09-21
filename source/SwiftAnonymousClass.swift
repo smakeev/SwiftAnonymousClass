@@ -11,13 +11,13 @@ import ObjectiveC
 fileprivate var AssociatedObjectHandle: UInt8 = 0
 
 class LifeBinder {
-	var holder: Any!
-	init(_ holder: Any) {
+	var holder: Any?
+	init(_ holder: Any?) {
 		self.holder = holder
 	}
 }
 
-public func _new<Type>(owner: AnyObject? = nil, _ objectCreator:()->Type) -> Type? {
+public func _new<Type>(owner: AnyObject? = nil, _ objectCreator:()->Type) -> Type {
 	let object = objectCreator()
 	if let validOwner = owner {
 		let binder = LifeBinder(object)
