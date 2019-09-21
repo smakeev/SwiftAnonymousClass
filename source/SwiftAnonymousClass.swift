@@ -7,5 +7,5 @@
 //
 //
 public func _new<Type>(_ objectCreator:()->Type) -> Type {
-    return objectCreator()
+	return objectCreator()
 }
