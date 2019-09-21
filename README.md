@@ -4,7 +4,7 @@ Analog of anonymous class in Swift.
 
 SwiftAnonymousClass adds function ```_new``` in your project.
 ```swift
-func _new<Type>(owner: AnyObject? = nil, _ objectCreator:()->Type) -> Type?
+public func _new<Type>(owner: AnyObject? = nil, _ objectCreator:()->Type) -> Type
 ```
 Let's say you have a protocol:
 ```swift
@@ -15,7 +15,7 @@ protocol Greeting {
 You need a class wich says hello.
 
 ```swift
-let object: Greeting? = _new {
+let object: Greeting = _new {
   class NoName: Greeting {
     func sayHello() -> String {
       return "hello from no name class"
@@ -24,7 +24,7 @@ let object: Greeting? = _new {
   return NoName()
 }
 
-object?.sayHello()
+object.sayHello()
 ```
 More real example:
 
