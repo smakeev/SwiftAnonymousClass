@@ -73,6 +73,7 @@ a.delegate = _new(owner: a) {
 				func `do`() {
 					print("DO from delegate")
 				}
+				return ADelegateInstance()
 			}
       }
 ```
