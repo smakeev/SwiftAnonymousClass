@@ -43,7 +43,7 @@ More real example:
                                           },
                                           delegateQueue: nil)
 ```                                          
-Note URLSession stores it's delegate strongly but, usually delegates are stored weekly. So you will get nil if just use ```some.delegate = _new {...}```.
+Note URLSession stores it's delegate strongly but, usually delegates are stored weakly. So you will get nil if just use ```some.delegate = _new {...}```.
 Firstly you need to store it strongly.
 To do this you may use ```owner``` parameter of ```_new``` function.
 This parameter will bind lifetime of ```_new``` object and ```owner```
